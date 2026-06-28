@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHAWORKOUTS | Interactive Calisthenics Roadmap & Progress Tracker</title>
+  <!-- Google Fonts for premium tech/athletic look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome for clean vector icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-bolt brand-icon"></i>
+        <span class="brand-text">SHA<span class="highlight">WORKOUTS</span></span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-target="dashboard">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-target="roadmap">
+          <i class="fa-solid fa-diagram-project"></i>
+          <span>Skill Roadmap</span>
+        </button>
+        <button class="nav-item" data-target="explorer">
+          <i class="fa-solid fa-dumbbell"></i>
+          <span>Skill Explorer</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="btn-reset-data" class="btn btn-secondary btn-sm">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Reset Progress</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <!-- Top Bar / Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-subtitle">Track, train, and master bodyweight strength progression.</p>
+        </div>
+        <div class="header-right">
+          <div class="streak-badge">
+            <i class="fa-solid fa-fire icon-streak"></i>
+            <span id="header-streak-count">0</span> Day Streak
+          </div>
+          <div class="user-level-badge">
+            <span id="header-user-level">Level 1</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="view-content">
+
+        <!-- ================= VIEW: DASHBOARD ================= -->
+        <section id="view-dashboard" class="view-section active">
+          
+          <!-- Summary Metrics Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper cyan">
+                <i class="fa-solid fa-trophy"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Overall Progress</h3>
+                <div class="progress-details">
+                  <span class="stat-number" id="dashboard-progress-pct">0%</span>
+                  <span class="stat-subtext" id="dashboard-progress-count">0 / 0 Skills</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar" id="dashboard-progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper purple">
+                <i class="fa-solid fa-stairs"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Current Rank</h3>
+                <span class="stat-number" id="dashboard-user-rank">Novice</span>
+                <span class="stat-subtext" id="dashboard-rank-subtext">Level 1 Foundation</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper green">
+                <i class="fa-solid fa-dumbbell"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Next Targets</h3>
+                <span class="stat-number" id="dashboard-remaining-count">0 Locked</span>
+                <span class="stat-subtext">Ahead of you</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Main Layout (Two columns) -->
+          <div class="dashboard-body">
+            
+            <!-- Left: Recommendations & Activity -->
+            <div class="dashboard-left">
+              <div class="content-panel">
+                <div class="panel-header">
+                  <h2><i class="fa-solid fa-bullseye icon-panel"></i>Recommended Next Actions</h2>
+                  <span class="panel-tag">Custom Progression</span>
+                </div>
+                <div class="panel-body">
+                  <p class="panel-intro">Based on your current masteries, we recommend focusing on these skills to build proper prerequisite strength.</p>
+                  <div id="recommendations-list" class="skills-card-list">
+                    <!-- Dynamic recommendation cards go here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick FAQ / Quick Guide -->
+              <div class="content-panel">
+                <div class="panel-header">
+                  <h2><i class="fa-solid fa-circle-question icon-panel"></i>How Progression Works</h2>
+                </div>
+                <div class="panel-body faq-content">
+                  <div class="faq-item">
+                    <h4><span class="faq-num">1</span> Build Your Foundation</h4>
+                    <p>Start with Level 1 (Absolute Beginner). Focus on basic joint conditioning, grip, core stability (Hollow Holds), and basic squats and push-ups.</p>
+                  </div>
+                  <div class="faq-item">
+                    <h4><span class="faq-num">2</span> Focus on Key Prerequisite Skills</h4>
+                    <p>Advanced skills (like the Planche or Front Lever) require massive straight-arm strength. Complete easier versions first before attempting higher levels.</p>
+                  </div>
+                  <div class="faq-item">
+                    <h4><span class="faq-num">3</span> Train Consistently</h4>
+                    <p>Toggle the "Completed" checkmark on any skill card or use the active stopwatch and countdown timers to measure hold-times. Consistency logs keep your streak alive!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Breakdown by Category -->
+            <div class="dashboard-right">
+              <div class="content-panel full-height">
+                <div class="panel-header">
+                  <h2><i class="fa-solid fa-chart-pie icon-panel"></i>Category Breakdown</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="category-stats-list" id="category-progress-list">
+                    <!-- Dynamic Category Progress items loaded here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ================= VIEW: ROADMAP ================= -->
+        <section id="view-roadmap" class="view-section">
+          
+          <div class="roadmap-controls">
+            <div class="roadmap-legend">
+              <span class="legend-item"><span class="legend-dot status-mastered"></span> Mastered</span>
+              <span class="legend-item"><span class="legend-dot status-active"></span> In Progress</span>
+              <span class="legend-item"><span class="legend-dot status-locked"></span> Locked</span>
+            </div>
+            
+            <div class="level-nav-pills" id="roadmap-level-filters">
+              <button class="level-pill active" data-level="1">Lvl 1: Foundation</button>
+              <button class="level-pill" data-level="2">Lvl 2: Beginner</button>
+              <button class="level-pill" data-level="3">Lvl 3: Intermediate</button>
+              <button class="level-pill" data-level="4">Lvl 4: Advanced</button>
+              <button class="level-pill" data-level="5">Lvl 5: Expert</button>
+              <button class="level-pill" data-level="6">Lvl 6: Elite</button>
+              <button class="level-pill" data-level="7">Lvl 7: World Class</button>
+            </div>
+          </div>
+
+          <!-- Roadmap Graph Workspace -->
+          <div class="roadmap-container-outer">
+            <div class="roadmap-container" id="roadmap-canvas">
+              <!-- Grid-based Category Swimlanes -->
+              <div class="swimlanes-container" id="roadmap-swimlanes">
+                <!-- Dynamically generated nodes organized by Category swimlanes -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= VIEW: EXPLORER ================= -->
+        <section id="view-explorer" class="view-section">
+          
+          <!-- Search & Filter Controls -->
+          <div class="explorer-toolbar">
+            <div class="search-box-wrapper">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input type="text" id="search-input" placeholder="Search exercises (e.g. Planche, Pull-up, L-sit)..." autocomplete="off">
+              <button id="search-clear-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="filter-controls-group">
+              <!-- Level Selector -->
+              <div class="custom-select-wrapper">
+                <i class="fa-solid fa-stairs select-icon"></i>
+                <select id="filter-level">
+                  <option value="all">All Levels (1 - 7)</option>
+                  <option value="1">Level 1 - Absolute Beginner</option>
+                  <option value="2">Level 2 - Beginner</option>
+                  <option value="3">Level 3 - Intermediate</option>
+                  <option value="4">Level 4 - Advanced</option>
+                  <option value="5">Level 5 - Expert</option>
+                  <option value="6">Level 6 - Elite</option>
+                  <option value="7">Level 7 - World Class / Pro</option>
+                </select>
+              </div>
+
+              <!-- Status Selector -->
+              <div class="custom-select-wrapper">
+                <i class="fa-solid fa-circle-check select-icon"></i>
+                <select id="filter-status">
+                  <option value="all">All States</option>
+                  <option value="mastered">Mastered Only</option>
+                  <option value="in_progress">In Progress Only</option>
+                  <option value="locked">Not Started Only</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horizontal Category Pills -->
+          <div class="category-pills" id="explorer-category-filters">
+            <button class="category-pill active" data-category="all">All Disciplines</button>
+            <button class="category-pill" data-category="Push">Push</button>
+            <button class="category-pill" data-category="Pull">Pull</button>
+            <button class="category-pill" data-category="Core">Core</button>
+            <button class="category-pill" data-category="Legs">Legs</button>
+            <button class="category-pill" data-category="Balance">Balance</button>
+            <button class="category-pill" data-category="Static Holds">Static Holds</button>
+            <button class="category-pill" data-category="Dynamic">Dynamic</button>
+            <button class="category-pill" data-category="Ring">Ring Skills</button>
+            <button class="category-pill" data-category="Mobility">Mobility</button>
+            <button class="category-pill" data-category="Freestyle">Freestyle</button>
+          </div>
+
+          <!-- Active Filter Description Summary -->
+          <div class="results-meta">
+            <span id="results-count">Showing 0 exercises</span>
+            <span id="results-filter-badge" class="results-badge" style="display:none">Filter Active</span>
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="skills-grid" id="explorer-skills-grid">
+            <!-- Dynamically populated skill cards -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ================= INTERACTIVE DETAIL DRAWER (SLIDE-OUT) ================= -->
+    <div class="drawer-backdrop" id="detail-drawer-backdrop"></div>
+    <div class="detail-drawer" id="detail-drawer">
+      
+      <!-- Drawer Header -->
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <div class="drawer-tags">
+            <span class="badge badge-lvl" id="drawer-lbl-level">Level 1</span>
+            <span class="badge badge-cat" id="drawer-lbl-category">Category</span>
+          </div>
+          <h2 id="drawer-skill-name">Wall Push-up</h2>
+          <p id="drawer-skill-subcat">Push Skills</p>
+        </div>
+        <button class="drawer-close" id="btn-close-drawer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Content -->
+      <div class="drawer-content">
+        
+        <!-- Tab Navigation -->
+        <div class="drawer-tabs">
+          <button class="drawer-tab active" data-tab="tab-overview">Overview</button>
+          <button class="drawer-tab" data-tab="tab-train">Practice Station</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="tab-pane active" id="tab-overview">
+          
+          <!-- Muscle Target Graph Preview -->
+          <div class="drawer-section">
+            <h3><i class="fa-solid fa-bullseye section-icon"></i>Muscular Focus</h3>
+            <div class="muscle-tags" id="drawer-muscle-tags">
+              <!-- Dynamic muscle group tags -->
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="drawer-section">
+            <h3><i class="fa-solid fa-circle-info section-icon"></i>Description</h3>
+            <p id="drawer-description" class="drawer-text-block">An introductory push exercise to build foundational arm and chest coordination with minimal load.</p>
+          </div>
+
+          <!-- Prerequisites Checklist -->
+          <div class="drawer-section" id="drawer-prereqs-section">
+            <h3><i class="fa-solid fa-link section-icon"></i>Prerequisites</h3>
+            <div id="drawer-prereqs-list">
+              <!-- Prerequisite pills/links go here -->
+            </div>
+            <div class="prereq-alert" id="drawer-prereq-warning" style="display: none;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>Locked: We recommend mastering prerequisites first.</span>
+            </div>
+          </div>
+
+          <!-- Steps -->
+          <div class="drawer-section">
+            <h3><i class="fa-solid fa-list-ol section-icon"></i>Step-by-Step Instructions</h3>
+            <ol class="drawer-steps-list" id="drawer-steps-list">
+              <!-- Dynamic steps -->
+            </ol>
+          </div>
+
+          <!-- Pro Tips / Mistakes -->
+          <div class="drawer-section">
+            <h3><i class="fa-solid fa-lightbulb section-icon"></i>Form Cues & Tips</h3>
+            <ul class="drawer-tips-list" id="drawer-tips-list">
+              <!-- Dynamic tips -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tab: Train / Practice -->
+        <div class="tab-pane" id="tab-train">
+          
+          <!-- Practice Target Goal -->
+          <div class="drawer-section text-center">
+            <span class="target-label">Target Mastery Goal</span>
+            <div class="target-value" id="drawer-target-val">3 sets of 15-20 reps</div>
+          </div>
+
+          <!-- Interactive Active Timer -->
+          <div class="timer-section">
+            
+            <div class="timer-mode-toggles">
+              <button class="timer-mode-btn active" id="btn-mode-stopwatch">Stopwatch</button>
+              <button class="timer-mode-btn" id="btn-mode-countdown">Countdown</button>
+            </div>
+
+            <!-- Timer Circle Display -->
+            <div class="timer-display-container">
+              <!-- Custom circular progress ring -->
+              <svg class="timer-ring" width="200" height="200">
+                <circle class="timer-ring-bg" cx="100" cy="100" r="88" stroke-width="8"></circle>
+                <circle class="timer-ring-progress" id="timer-ring-bar" cx="100" cy="100" r="88" stroke-width="8" stroke-dasharray="552.9" stroke-dashoffset="0"></circle>
+              </svg>
+              <div class="timer-text-container">
+                <span class="timer-time" id="timer-time-display">00:00</span>
+                <span class="timer-sub" id="timer-status-text">Ready</span>
+              </div>
+            </div>
+
+            <!-- Countdown Preset Picker -->
+            <div class="countdown-presets" id="countdown-presets-row" style="display: none;">
+              <button class="preset-btn" data-time="10">10s</button>
+              <button class="preset-btn" data-time="20">20s</button>
+              <button class="preset-btn" data-time="30">30s</button>
+              <button class="preset-btn" data-time="45">45s</button>
+              <button class="preset-btn" data-time="60">60s</button>
+            </div>
+
+            <!-- Timer Actions -->
+            <div class="timer-controls">
+              <button class="btn btn-secondary" id="btn-timer-reset">
+                <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+              </button>
+              <button class="btn btn-primary" id="btn-timer-start-pause">
+                <i class="fa-solid fa-play"></i> Start
+              </button>
+            </div>
+            
+            <!-- Sound Alert Toggle -->
+            <div class="sound-toggle-wrapper">
+              <label class="switch">
+                <input type="checkbox" id="timer-sound-toggle" checked>
+                <span class="slider round"></span>
+              </label>
+              <span>Chime on Completion</span>
+            </div>
+          </div>
+
+          <!-- Session Logger Quick Tools -->
+          <div class="drawer-section training-log-section">
+            <h3><i class="fa-solid fa-clipboard-check section-icon"></i>Work Log</h3>
+            <div class="session-log-form">
+              <div class="form-row-grid">
+                <div class="form-col">
+                  <label for="log-sets">Sets</label>
+                  <input type="number" id="log-sets" min="1" max="10" value="3">
+                </div>
+                <div class="form-col">
+                  <label for="log-reps" id="lbl-log-reps">Reps</label>
+                  <input type="number" id="log-reps" min="0" max="100" value="10">
+                </div>
+              </div>
+              <button class="btn btn-success btn-block" id="btn-log-session">
+                <i class="fa-solid fa-plus"></i> Log Practice Session
+              </button>
+            </div>
+
+            <!-- Previous Session Record -->
+            <div class="previous-sessions-panel">
+              <h4>Activity History</h4>
+              <ul class="session-history-list" id="drawer-session-history">
+                <!-- Dynamically listed history logs -->
+                <li class="history-empty">No logged practices yet</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer Actions -->
+      <div class="drawer-footer">
+        <button class="btn btn-secondary" id="btn-drawer-status-toggle">
+          <i class="fa-solid fa-circle-check"></i>
+          <span id="btn-drawer-status-text">Mark as Mastered</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Audio element for timer chime -->
+  <audio id="timer-chime" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" preload="auto"></audio>
+
+  <!-- Script Modules -->
+  <script src="skills.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
